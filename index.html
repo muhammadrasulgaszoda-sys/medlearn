@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="tg">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MedLearn — Medical Learning</title>
+<style>
+:root{--blue:#1769e8;--bg:#f4f8ff;--text:#183153;--muted:#72829b;--white:#fff}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+header{background:#fff;padding:17px 22px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 2px 15px #1831530a;position:sticky;top:0;z-index:5}
+.logo{font-size:22px;font-weight:800;color:var(--blue)}
+.logo span{color:#18b88a}
+header button,.btn{border:0;background:var(--blue);color:#fff;padding:11px 16px;border-radius:12px;font-weight:700;cursor:pointer}
+main{max-width:1100px;margin:auto;padding:22px 16px}
+.hero{background:linear-gradient(115deg,#e3f3ff,#f0eaff);border-radius:24px;padding:25px 22px;margin-bottom:22px}
+.hero h1{font-size:27px;margin:0 0 10px}
+.hero p{color:var(--muted);line-height:1.6}
+.stats{display:flex;gap:12px;flex-wrap:wrap;margin:20px 0}
+.stat{background:#fff;border-radius:16px;padding:15px;flex:1;min-width:100px;box-shadow:0 3px 15px #18315308}
+.stat strong{display:block;font-size:23px;color:var(--blue);margin-bottom:5px}
+.stat small{color:var(--muted)}
+.search{width:100%;padding:15px;border:1px solid #dce6f5;border-radius:13px;font-size:16px;margin:4px 0 24px;outline-color:var(--blue)}
+h2{font-size:21px;margin:24px 0 15px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}
+.course{background:#fff;border-radius:18px;padding:18px 14px;border:1px solid #e8eef8;cursor:pointer;transition:.2s}
+.course:active{transform:scale(.98)}
+.icon{font-size:30px}
+.course h3{font-size:16px;margin:10px 0 6px}
+.course p{font-size:13px;color:var(--muted);line-height:1.5;min-height:38px}
+.bar{height:7px;background:#e9eff8;border-radius:8px;overflow:hidden;margin-top:12px}
+.bar span{display:block;height:100%;background:#2580f5;border-radius:8px}
+.quick{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.quick button{background:#fff;border:1px solid #e2eaf6;border-radius:15px;padding:17px 10px;color:var(--text);font-weight:700;font-size:14px;text-align:left;cursor:pointer}
+.quick button span{display:block;font-size:25px;margin-bottom:8px}
+.panel{display:none;background:#fff;border-radius:20px;padding:20px;margin-top:20px;border:1px solid #e2eaf6}
+.panel.active{display:block}
+.option{display:block;width:100%;text-align:left;background:#f5f8ff;border:1px solid #dfe8f7;padding:14px;border-radius:12px;margin:10px 0;cursor:pointer;color:var(--text);font-size:15px}
+.option:hover{border-color:var(--blue)}
+#feedback{padding:12px;border-radius:10px;margin-top:12px;line-height:1.5}
+footer{text-align:center;color:var(--muted);font-size:12px;padding:30px 15px}
+@media(min-width:700px){.grid{grid-template-columns:repeat(4,minmax(0,1fr))}.quick{grid-template-columns:repeat(4,minmax(0,1fr))}.hero{padding:35px}.hero h1{font-size:34px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">🩺 Med<span>Learn</span></div>
+  <button onclick="showPanel('quiz')">Оғози тест →</button>
+</header>
+<main>
+  <section class="hero">
+    <h1>Салом, донишҷӯи ояндаи тиб! 👋</h1>
+    <p>Ҳар рӯз каме омӯз — ба духтури беҳтар табдил ёб. Дониши тиббии худро қадам ба қадам инкишоф деҳ.</p>
+    <button class="btn" onclick="showPanel('courses')">Идома додани омӯзиш →</button>
+  </section>
+  <div class="stats">
+    <div class="stat"><strong id="xp">0 XP</strong><small>⭐ Таҷриба</small></div>
+    <div class="stat"><strong id="done">0</strong><small>📝 Ҷавобҳои дуруст</small></div>
+    <div class="stat"><strong>1</strong><small>🔥 Рӯзи омӯзиш</small></div>
+  </div>
+  <input class="search" id="search" placeholder="🔍 Ҷустуҷӯи фан ё мавзӯи тиббӣ..." oninput="filterCourses()">
+  <h2>📚 Фанҳои тиббӣ</h2>
+  <section class="grid" id="courses">
+    <article class="course" data-name="Педиатрия кӯдакон"><div class="icon">👶</div><h3>Педиатрия</h3><p>Бемориҳои кӯдакон ва рушди онҳо</p><div class="bar"><span style="width:20%"></span></div></article>
+    <article class="course" data-name="Фармакология дору"><div class="icon">💊</div><h3>Фармакология</h3><p>Доруҳо ва механизмҳои таъсири онҳо</p><div class="bar"><span style="width:10%"></span></div></article>
+    <article class="course" data-name="Кардиология дил"><div class="icon">❤️</div><h3>Кардиология</h3><p>Дил ва системаи гардиши хун</p><div class="bar"><span style="width:15%"></span></div></article>
+    <article class="course" data-name="Пулмонология шуш нафас"><div class="icon">🫁</div><h3>Пулмонология</h3><p>Системаи нафаскашӣ ва бемориҳои он</p><div class="bar"><span style="width:5%"></span></div></article>
+    <article class="course" data-name="Неврология асаб"><div class="icon">🧠</div><h3>Неврология</h3><p>Майна ва системаи асаб</p><div class="bar"><span style="width:0%"></span></div></article>
+    <article class="course" data-name="Эндокринология гормон"><div class="icon">🧬</div><h3>Эндокринология</h3><p>Гормонҳо ва ғадудҳои эндокринӣ</p><div class="bar"><span style="width:0%"></span></div></article>
+    <article class="course" data-name="Микробиология бактерия вирус"><div class="icon">🦠</div><h3>Микробиология</h3><p>Бактерияҳо, вирусҳо ва микробҳо</p><div class="bar"><span style="width:0%"></span></div></article>
+    <article class="course" data-name="Анатомия физиология"><div class="icon">🦴</div><h3>Анатомия</h3><p>Сохтор ва фаъолияти бадани инсон</p><div class="bar"><span style="width:0%"></span></div></article>
+  </section>
+  <h2>⚡ Дастрасии зуд</h2>
+  <section class="quick">
+    <button onclick="showPanel('quiz')"><span>📝</span>Тестҳо</button>
+    <button onclick="showPanel('cases')"><span>🩺</span>Ҳолатҳои клиникӣ</button>
+    <button onclick="showPanel('cards')"><span>🗂️</span>Flashcards</button>
+    <button onclick="showPanel('plan')"><span>🎯</span>Нақшаи омӯзиш</button>
+  </section>
+  <section class="panel" id="quiz">
+    <h2>📝 Тести тиббӣ</h2>
+    <p id="question">Кадом микроорганизм сабаби маъмултарини бронхиолит дар кӯдакони хурдсол аст?</p>
+    <div id="options"></div><div id="feedback" aria-live="polite"></div>
+    <button class="btn" onclick="nextQuestion()">Саволи навбатӣ →</button>
+  </section>
+  <section class="panel" id="cases">
+    <h2>🩺 Ҳолати клиникӣ</h2>
+    <p>Кӯдаки 8-моҳа бо бинӣравӣ, сулфа ва ҳуштаккашии нафас оварда шуд. Ҳарорати бадан 37.8°C аст.</p>
+    <p><b>Савол:</b> Қадами аввалини дуруст кадом аст?</p>
+    <button class="option" onclick="caseAnswer(false)">Фавран антибиотик таъин кардан</button>
+    <button class="option" onclick="caseAnswer(true)">Нафаскашӣ, сатҳи оксиген ва нишонаҳои вазниниро арзёбӣ кардан</button>
+    <div id="casefeedback" aria-live="polite"></div>
+  </section>
+  <section class="panel" id="cards">
+    <h2>🗂️ Flashcard</h2>
+    <p id="card">RSV — вируси синситиалии нафаскашӣ.</p>
+    <button class="btn" onclick="flipCard()">Ҷавоб / Шарҳ</button>
+    <button class="btn" onclick="nextCard()">Корти навбатӣ</button>
+  </section>
+  <section class="panel" id="plan">
+    <h2>🎯 Нақшаи омӯзиши имрӯз</h2>
+    <p>☐ 10 дақиқа анатомия</p><p>☐ 5 саволи тестӣ</p><p>☐ 1 ҳолати клиникӣ</p>
+    <p>Мақсад: ҳар рӯз як қадам пеш рафтан!</p>
+  </section>
+</main>
+<footer>MedLearn • Платформаи таълимии тиббӣ • Барои омӯзиш, на ивазкунандаи машварати духтур.</footer>
+<script>
+const qs=[
+{q:"Кадом вирус сабаби маъмултарини бронхиолит дар кӯдакони хурдсол аст?",o:["RSV","Вируси гепатити B","ВИЧ","Папилломавирус"],a:0,e:"RSV сабаби асосии бронхиолит дар кӯдакон мебошад."},
+{q:"Кадом ҳуҷайраҳо оксигенро дар хун интиқол медиҳанд?",o:["Тромбоцитҳо","Эритроситҳо","Нейтрофилҳо","Лимфоситҳо"],a:1,e:"Эритроситҳо гемоглобин доранд, ки оксигенро интиқол медиҳад."},
+{q:"Кадом узв инсулин ҳосил мекунад?",o:["Ҷигар","Гурда","Ғадуди зери меъда","Сипаршакл"],a:2,e:"Ҳуҷайраҳои бетаи ҷазираҳои Лангерганс дар ғадуди зери меъда инсулин ҳосил мекунанд."},
+{q:"Кадом гурӯҳи доруҳо бактерияҳоро мекушанд ё афзоиши онҳоро бозмедоранд?",o:["Антибиотикҳо","Антацидҳо","Антигистаминҳо","Диуретикҳо"],a:0,e:"Антибиотикҳо бар зидди бактерияҳои ҳассос таъсир мекунанд, на вирусҳо."}
+];
+let qi=0,xp=0,done=0,answered=false;
+function showPanel(id){document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));let p=document.getElementById(id);p.classList.add('active');p.scrollIntoView({behavior:'smooth',block:'start'});if(id==='quiz')renderQ()}
+function renderQ(){answered=false;document.getElementById('question').textContent=qs[qi].q;document.getElementById('feedback').textContent='';document.getElementById('options').innerHTML=qs[qi].o.map((v,i)=>`<button class="option" onclick="answer(${i})">${String.fromCharCode(65+i)}. ${v}</button>`).join('')}
+function answer(i){if(answered)return;answered=true;let q=qs[qi],ok=i===q.a;document.getElementById('feedback').style.background=ok?'#e1f8ed':'#fff0ee';document.getElementById('feedback').textContent=(ok?'✅ Дуруст! +10 XP. ':'❌ Нодуруст. ') + q.e;if(ok){xp+=10;done++;document.getElementById('xp').textContent=xp+' XP';document.getElementById('done').textContent=done;try{localStorage.setItem('medlearn-xp',xp);localStorage.setItem('medlearn-done',done)}catch(e){}}}
+function nextQuestion(){qi=(qi+1)%qs.length;renderQ()}
+function caseAnswer(ok){document.getElementById('casefeedback').textContent=ok?'Дуруст: аввал вазнинии ҳолат ва оксигенатсияро арзёбӣ кардан лозим аст.':'На ҳамеша. Аввал ҳолати кӯдак ва эҳтиёҷи табобатро арзёбӣ кун.'}
+const cards=[["RSV","Вируси синситиалии нафаскашӣ; сабаби маъмули бронхиолит."],["Эритросит","Ҳуҷайраи хун, ки оксигенро бо ёрии гемоглобин интиқол медиҳад."],["Инсулин","Гормоне, ки сатҳи глюкозаи хунро паст мекунад."]];
+let ci=0,flipped=false;
+function flipCard(){flipped=!flipped;document.getElementById('card').textContent=flipped?cards[ci][1]:cards[ci][0]}
+function nextCard(){ci=(ci+1)%cards.length;flipped=false;document.getElementById('card').textContent=cards[ci][0]}
+function filterCourses(){let s=document.getElementById('search').value.toLowerCase();document.querySelectorAll('.course').forEach(c=>c.style.display=c.dataset.name.toLowerCase().includes(s)?'block':'none')}
+try{xp=Number(localStorage.getItem('medlearn-xp'))||0;done=Number(localStorage.getItem('medlearn-done'))||0;document.getElementById('xp').textContent=xp+' XP';document.getElementById('done').textContent=done}catch(e){}
+renderQ();
+</script>
+</body>
+</html>
