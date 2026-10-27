@@ -125,5 +125,6 @@ function filterCourses(){let s=document.getElementById('search').value.toLowerCa
 try{xp=Number(localStorage.getItem('medlearn-xp'))||0;done=Number(localStorage.getItem('medlearn-done'))||0;document.getElementById('xp').textContent=xp+' XP';document.getElementById('done').textContent=done}catch(e){}
 renderQ();
 </script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </body>
 </html>
