@@ -129,13 +129,11 @@ renderQ();
 <script>
 const SUPABASE_URL = "https://rpysxhkwnqswnpgwpjcx.supabase.co";
 const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_5vAxjR35jLecMZJC1FSUAw_K4Sg8F88";
-
 const supabaseClient = window.supabase.createClient(
   SUPABASE_URL,
   SUPABASE_PUBLISHABLE_KEY
 );
 </script>
-
 <style>
   #ml-auth {
     max-width: 520px;
@@ -145,48 +143,40 @@ const supabaseClient = window.supabase.createClient(
     border-radius: 18px;
     background: #fff;
     color: #183153;
-    font-family: Arial, sans-serif;
-  }
+    font-family: Arial, sans-serif;}
   #ml-auth input, #ml-auth button {
     box-sizing: border-box;
     width: 100%;
     padding: 12px;
     margin: 6px 0;
     border-radius: 10px;
-    font-size: 16px;
-  }
+    font-size: 16px;}
   #ml-auth input { border: 1px solid #ccd5e0; }
   #ml-auth button {
     border: 0;
     background: #1769e8;
     color: white;
-    font-weight: bold;
-  }
+    font-weight: bold;}
   #ml-auth button.secondary { background: #e9eef7; color: #183153; }
   #ml-auth-status { overflow-wrap: anywhere; }
 </style>
-
 <section id="ml-auth">
   <h2>🔐 MedLearn Pro — Ҳисоби ман</h2>
   <p id="ml-auth-status">Санҷидани пайвастшавӣ...</p>
-
-  <div id="ml-auth-form">
+<div id="ml-auth-form">
     <label for="ml-email">Email</label>
     <input id="ml-email" type="email"
       autocomplete="email" placeholder="name@example.com" required>
-
-    <label for="ml-password">Парол</label>
+  <label for="ml-password">Парол</label>
     <input id="ml-password" type="password"
       autocomplete="current-password"
       placeholder="Ҳадди ақал 6 аломат" minlength="6" required>
-
-    <button id="ml-signup" type="button">Сабти ном</button>
+<button id="ml-signup" type="button">Сабти ном</button>
     <button id="ml-login" type="button" class="secondary">
       Ворид шудан
     </button>
   </div>
-
-  <div id="ml-account" hidden>
+ <div id="ml-account" hidden>
     <p>Шумо ворид шудед:</p>
     <strong id="ml-user-email"></strong>
     <button id="ml-logout" type="button">Баромадан</button>
@@ -199,23 +189,19 @@ const supabaseClient = window.supabase.createClient(
   const account = document.getElementById('ml-account');
   const emailInput = document.getElementById('ml-email');
   const passwordInput = document.getElementById('ml-password');
-
-  if (!window.supabase || typeof supabaseClient === 'undefined') {
+if (!window.supabase || typeof supabaseClient === 'undefined') {
     status.textContent =
       'Хатогӣ: пайвастшавии Supabase ёфт нашуд. Кодро санҷед.';
     return;
   }
-
-  function showMessage(message) {
+function showMessage(message) {
     status.textContent = message;
   }
-
-  function showSession(session) {
+function showSession(session) {
     const loggedIn = Boolean(session);
     form.hidden = loggedIn;
     account.hidden = !loggedIn;
-
-    if (session) {
+if (session) {
       document.getElementById('ml-user-email').textContent =
         session.user.email || 'Корбар';
       showMessage('Шумо ба ҳисоби худ ворид шудед.');
@@ -223,36 +209,28 @@ const supabaseClient = window.supabase.createClient(
       showMessage('Барои идома ворид шавед ё сабти ном кунед.');
     }
   }
-
-  function getCredentials() {
+function getCredentials() {
     const email = emailInput.value.trim();
     const password = passwordInput.value;
-
-    if (!email || !emailInput.checkValidity()) {
+ if (!email || !emailInput.checkValidity()) {
       showMessage('Email-и дурустро ворид кунед.');
       return null;
     }
-
-    if (password.length < 6) {
+ if (password.length < 6) {
       showMessage('Парол бояд на камтар аз 6 аломат бошад.');
       return null;
     }
-
-    return { email, password };
+ return { email, password };
   }
-
-  document.getElementById('ml-signup').addEventListener('click', async () => {
+ document.getElementById('ml-signup').addEventListener('click', async () => {
     const credentials = getCredentials();
     if (!credentials) return;
-
-    showMessage('Сабти ном идома дорад...');
-
-    const { data, error } = await supabaseClient.auth.signUp({
+showMessage('Сабти ном идома дорад...');
+  const { data, error } = await supabaseClient.auth.signUp({
       email: credentials.email,
       password: credentials.password
     });
-
-    if (error) {
+ if (error) {
       showMessage('Хатогӣ: ' + error.message);
       return;
     }
@@ -266,40 +244,31 @@ const supabaseClient = window.supabase.createClient(
       );
     }
   });
-
-  document.getElementById('ml-login').addEventListener('click', async () => {
+document.getElementById('ml-login').addEventListener('click', async () => {
     const credentials = getCredentials();
     if (!credentials) return;
-
-    showMessage('Воридшавӣ идома дорад...');
-
-    const { data, error } =
+  showMessage('Воридшавӣ идома дорад...');
+ const { data, error } =
       await supabaseClient.auth.signInWithPassword(credentials);
-
-    if (error) {
+  if (error) {
       showMessage('Хатогӣ: ' + error.message);
       return;
     }
-
-    showSession(data.session);
+ showSession(data.session);
   });
-
-  document.getElementById('ml-logout').addEventListener('click', async () => {
+ document.getElementById('ml-logout').addEventListener('click', async () => {
     const { error } = await supabaseClient.auth.signOut();
-
-    if (error) {
+ if (error) {
       showMessage('Хатогӣ ҳангоми баромадан: ' + error.message);
       return;
     }
-
-    showSession(null);
+ showSession(null);
   });
 
   supabaseClient.auth.onAuthStateChange((_event, session) => {
     showSession(session);
   });
-
-  supabaseClient.auth.getSession().then(({ data, error }) => {
+supabaseClient.auth.getSession().then(({ data, error }) => {
     if (error) {
       showMessage('Хатогӣ ҳангоми санҷиши ҳисоб: ' + error.message);
       return;
