@@ -280,5 +280,33 @@ supabaseClient.auth.getSession().then(({ data, error }) => {
   });
 })();
 </script>
+  <section id="ml-profile" hidden style="max-width:600px;margin:24px auto;padding:20px;border:1px solid #ddd;border-radius:16px;">
+  <h2>Профили ман</h2>
+  <p>Маълумоти худро пур кунед.</p>
+<label for="ml-full-name">Ному насаб</label>
+  <input id="ml-full-name" type="text" placeholder="Ному насаб" style="display:block;width:100%;padding:12px;margin:8px 0 16px;">
+<label for="ml-specialty">Ихтисос</label>
+  <select id="ml-specialty" style="display:block;width:100%;padding:12px;margin:8px 0 16px;">
+    <option value="">Ихтисосро интихоб кунед</option>
+    <option value="Педиатрия">Педиатрия</option>
+    <option value="Тибби оилавӣ">Тибби оилавӣ</option>
+    <option value="Терапия">Терапия</option>
+    <option value="Ҷарроҳӣ">Ҷарроҳӣ</option>
+    <option value="Донишҷӯи тиб">Донишҷӯи тиб</option>
+    <option value="Дигар">Дигар</option>
+  </select>
+<label for="ml-study-level">Сатҳи таҳсил</label>
+  <select id="ml-study-level" style="display:block;width:100%;padding:12px;margin:8px 0 16px;">
+    <option value="">Сатҳро интихоб кунед</option>
+    <option value="Донишҷӯ">Донишҷӯ</option>
+    <option value="Интернатура">Интернатура</option>
+    <option value="Резидентура">Резидентура</option>
+    <option value="Табиби амалкунанда">Табиби амалкунанда</option>
+  </select>
+  <button id="ml-save-profile" type="button" style="padding:12px 20px;cursor:pointer;">
+    Сабт кардани профил
+  </button>
+  <p id="ml-profile-status" role="status"></p>
+</section>
 </body>
 </html>
