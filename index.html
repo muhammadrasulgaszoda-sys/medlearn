@@ -199,6 +199,7 @@ function showMessage(message) {
   }
 function showSession(session) {
     const loggedIn = Boolean(session);
+  document.getElementById('ml-profile').hidden = !loggedIn;
     form.hidden = loggedIn;
     account.hidden = !loggedIn;
 if (session) {
