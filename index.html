@@ -342,6 +342,43 @@ document.getElementById('ml-save-profile').addEventListener('click', async () =>
 
   status.textContent = 'Профили шумо бомуваффақият сабт шуд!';
 });
-</script>
+
+async function loadSavedProfile() {
+  const status = document.getElementById('ml-profile-status');
+
+  const { data: userData, error: userError } =
+    await supabaseClient.auth.getUser();
+
+  if (userError || !userData.user) return;
+
+  const { data: profile, error } = await supabaseClient
+    .from('profiles')
+    .select('full_name, specialty, study_level')
+    .eq('id', userData.user.id)
+    .maybeSingle();
+
+  if (error) {
+    status.textContent = 'Хато ҳангоми бор кардани профил: ' + error.message;
+    return;
+  }
+
+  if (profile) {
+    document.getElementById('ml-full-name').value =
+      profile.full_name || '';
+    document.getElementById('ml-specialty').value =
+      profile.specialty || '';
+    document.getElementById('ml-study-level').value =
+      profile.study_level || '';
+  }
+}
+
+supabaseClient.auth.onAuthStateChange((event, session) => {
+  if (session) {
+    setTimeout(() => loadSavedProfile(), 0);
+  }
+});
+
+loadSavedProfile();
+  </script>
 </body>
 </html>
