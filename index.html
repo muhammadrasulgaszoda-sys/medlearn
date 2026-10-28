@@ -309,5 +309,39 @@ supabaseClient.auth.getSession().then(({ data, error }) => {
   </button>
   <p id="ml-profile-status" role="status"></p>
 </section>
+  <script>
+document.getElementById('ml-save-profile').addEventListener('click', async () => {
+  const status = document.getElementById('ml-profile-status');
+
+  status.textContent = 'Профил сабт шуда истодааст...';
+
+  const { data: userData, error: userError } =
+    await supabaseClient.auth.getUser();
+
+  if (userError || !userData.user) {
+    status.textContent = 'Аввал ба ҳисоби худ ворид шавед.';
+    return;
+  }
+
+  const profile = {
+    id: userData.user.id,
+    full_name: document.getElementById('ml-full-name').value.trim(),
+    specialty: document.getElementById('ml-specialty').value,
+    study_level: document.getElementById('ml-study-level').value,
+    updated_at: new Date().toISOString()
+  };
+
+  const { error } = await supabaseClient
+    .from('profiles')
+    .upsert(profile, { onConflict: 'id' });
+
+  if (error) {
+    status.textContent = 'Хато: ' + error.message;
+    return;
+  }
+
+  status.textContent = 'Профили шумо бомуваффақият сабт шуд!';
+});
+</script>
 </body>
 </html>
