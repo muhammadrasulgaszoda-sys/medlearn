@@ -226,10 +226,13 @@ function getCredentials() {
     const credentials = getCredentials();
     if (!credentials) return;
 showMessage('Сабти ном идома дорад...');
-  const { data, error } = await supabaseClient.auth.signUp({
-      email: credentials.email,
-      password: credentials.password
-    });
+const { data, error } = await supabaseClient.auth.signUp({
+  email: credentials.email,
+  password: credentials.password,
+  options: {
+    emailRedirectTo: 'https://muhammadrasulgaszoda-sys.github.io/medlearn/'
+  }
+});
  if (error) {
       showMessage('Хатогӣ: ' + error.message);
       return;
