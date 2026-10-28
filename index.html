@@ -380,5 +380,24 @@ supabaseClient.auth.onAuthStateChange((event, session) => {
 
 loadSavedProfile();
   </script>
+  
+<section id="ml-notes" hidden style="max-width:700px;margin:24px auto;padding:20px;border:1px solid #ddd;border-radius:16px;">
+  <h2>Қайдҳои тиббии ман</h2>
+  <p>Конспектҳо ва маълумоти муҳими худро нигоҳ дор.</p>
+
+  <label for="ml-note-title">Номи қайд</label>
+  <input id="ml-note-title" type="text" placeholder="Масалан: Фармакология" style="display:block;width:100%;padding:12px;margin:8px 0 16px;">
+
+  <label for="ml-note-content">Матни қайд</label>
+  <textarea id="ml-note-content" rows="6" placeholder="Дар ин ҷо конспектро навис..." style="display:block;width:100%;padding:12px;margin:8px 0 16px;"></textarea>
+
+  <button id="ml-save-note" type="button" style="padding:12px 20px;cursor:pointer;">
+    Сабт кардани қайд
+  </button>
+
+  <p id="ml-notes-status" role="status"></p>
+  <h3>Қайдҳои сабтшуда</h3>
+  <div id="ml-notes-list"></div>
+</section>
 </body>
 </html>
