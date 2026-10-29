@@ -200,7 +200,8 @@ function showMessage(message) {
 function showSession(session) {
     const loggedIn = Boolean(session);
   document.getElementById('ml-profile').hidden = !loggedIn;
-    form.hidden = loggedIn;
+  document.getElementById('ml-notes').hidden = !loggedIn;
+  form.hidden = loggedIn;
     account.hidden = !loggedIn;
 if (session) {
       document.getElementById('ml-user-email').textContent =
