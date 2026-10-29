@@ -933,5 +933,51 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 });
 </script>
+
+<style>
+  .ml-page-hidden {
+    display: none !important;
+  }
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const sectionIds = [
+    'ml-courses',
+    'ml-quiz',
+    'ml-notes',
+    'ml-profile'
+  ];
+
+  function showSection(targetId) {
+    sectionIds.forEach(function (id) {
+      const section = document.getElementById(id);
+      if (section) {
+        section.classList.add('ml-page-hidden');
+      }
+    });
+
+    if (targetId === 'ml-header') {
+      return;
+    }
+
+    const target = document.getElementById(targetId);
+    if (target && sectionIds.includes(targetId)) {
+      target.classList.remove('ml-page-hidden');
+      target.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
+
+  document.querySelectorAll('#ml-nav a').forEach(function (link) {
+    link.addEventListener('click', function (event) {
+      const targetId = link.getAttribute('href').slice(1);
+      event.preventDefault();
+      showSection(targetId);
+    });
+  });
+
+  showSection('ml-header');
+});
+</script>
 </body>
 </html>
