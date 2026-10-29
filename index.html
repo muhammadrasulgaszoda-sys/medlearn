@@ -853,5 +853,62 @@ loadSavedProfile();
     }
   }
 </style>
+
+<nav id="ml-nav">
+  <a href="#ml-header">🏠 Асосӣ</a>
+  <a href="#ml-courses">📚 Курсҳо</a>
+  <a href="#ml-quiz">📝 Тестҳо</a>
+  <a href="#ml-notes">📒 Қайдҳо</a>
+  <a href="#ml-profile">👤 Профил</a>
+</nav>
+
+<style>
+  #ml-nav {
+    max-width: 1100px;
+    margin: 20px auto;
+    padding: 12px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    background: white;
+    border: 1px solid #e2ebe5;
+    border-radius: 16px;
+    box-shadow: 0 4px 16px rgba(25,53,43,0.04);
+  }
+
+  #ml-nav a {
+    color: #315748;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 10px 14px;
+    border-radius: 10px;
+  }
+
+  #ml-nav a:hover {
+    background: #e9f7ef;
+    color: #106747;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 20px;
+  }
+
+  @media (max-width: 600px) {
+    #ml-nav {
+      margin: 12px;
+      justify-content: flex-start;
+      gap: 4px;
+    }
+
+    #ml-nav a {
+      padding: 9px 10px;
+      font-size: 13px;
+    }
+  }
+</style>
+
 </body>
 </html>
