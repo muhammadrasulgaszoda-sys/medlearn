@@ -910,5 +910,28 @@ loadSavedProfile();
   }
 </style>
 
+<style>
+  .ml-page-hidden {
+    display: none !important;
+  }
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const sections = [
+    'ml-courses',
+    'ml-quiz',
+    'ml-notes',
+    'ml-profile'
+  ];
+
+  sections.forEach(function (id) {
+    const section = document.getElementById(id);
+    if (section) {
+      section.classList.add('ml-page-hidden');
+    }
+  });
+});
+</script>
 </body>
 </html>
