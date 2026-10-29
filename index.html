@@ -160,7 +160,13 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:30px 15px}
     <span id="ml-avatar-placeholder">👤</span>
   </button>
 
-  <input type="file"
+<div id="ml-account-menu" class="ml-account-menu" hidden>
+  <button type="button" id="ml-view-profile">👤 Дидани профил</button>
+  <button type="button" id="ml-change-avatar">📸 Иваз кардани акс</button>
+  <button type="button" id="ml-delete-avatar">🗑️ Нест кардани акс</button>
+  <button type="button" id="ml-sign-out">🚪 Баромадан аз аккаунт</button>
+</div>
+<input type="file"
          id="ml-avatar-upload"
          accept="image/*"
          hidden>
