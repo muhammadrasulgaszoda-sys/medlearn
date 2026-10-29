@@ -135,6 +135,83 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:30px 15px}
 </style>
 </head>
 <body>
+  
+<header id="ml-header">
+  <div class="ml-brand">
+    <div class="ml-logo">✚</div>
+    <div>
+      <div class="ml-brand-name">MedLearn Pro</div>
+      <div class="ml-brand-subtitle">Medical Learning Platform</div>
+    </div>
+  </div>
+
+  <div class="ml-header-tag">🩺 Омӯзиши тиббӣ</div>
+</header>
+
+<style>
+  #ml-header {
+    max-width: 1100px;
+    margin: 24px auto;
+    padding: 18px 24px;
+    background: white;
+    border: 1px solid #e2ebe5;
+    border-radius: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    box-shadow: 0 6px 24px rgba(25,53,43,0.05);
+  }
+
+  .ml-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .ml-logo {
+    width: 48px;
+    height: 48px;
+    display: grid;
+    place-items: center;
+    border-radius: 14px;
+    background: #16845b;
+    color: white;
+    font-size: 30px;
+  }
+
+  .ml-brand-name {
+    color: #19352b;
+    font-size: 22px;
+    font-weight: 800;
+  }
+
+  .ml-brand-subtitle {
+    color: #6b7d74;
+    font-size: 12px;
+  }
+
+  .ml-header-tag {
+    background: #e9f7ef;
+    color: #106747;
+    padding: 9px 14px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  @media (max-width: 600px) {
+    #ml-header {
+      margin: 12px;
+      padding: 14px;
+      flex-wrap: wrap;
+    }
+
+    .ml-brand-name {
+      font-size: 19px;
+    }
+  }
+</style>
 <header>
   <div class="logo">🩺 Med<span>Learn</span></div>
   <button onclick="showPanel('quiz')">Оғози тест →</button>
