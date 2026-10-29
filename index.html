@@ -502,5 +502,85 @@ loadSavedProfile();
   loadNotes();
 })();
 </script>
+<section id="ml-quiz" style="max-width:700px;margin:24px auto;padding:20px;border:1px solid #ddd;border-radius:16px;">
+  <h2>🩺 Тестҳои тиббӣ</h2>
+  <p>Дониши худро санҷ ва шарҳи ҷавобҳоро омӯз.</p>
+
+  <label for="ml-quiz-topic">Мавзӯъро интихоб кун:</label>
+  <select id="ml-quiz-topic" style="display:block;width:100%;padding:12px;margin:10px 0;">
+    <option value="pharmacology">Фармакология</option>
+  </select>
+
+  <div id="ml-quiz-question" style="margin-top:20px;">
+    <h3>Парацетамол асосан чӣ таъсир дорад?</h3>
+
+    <label style="display:block;padding:10px;">
+      <input type="radio" name="ml-answer" value="A">
+      Антибактериалӣ
+    </label>
+
+    <label style="display:block;padding:10px;">
+      <input type="radio" name="ml-answer" value="B">
+      Пасткунандаи ҳарорат ва рафъкунандаи дард
+    </label>
+
+    <label style="display:block;padding:10px;">
+      <input type="radio" name="ml-answer" value="C">
+      Зиёдкунандаи лахташавии хун
+    </label>
+
+    <label style="display:block;padding:10px;">
+      <input type="radio" name="ml-answer" value="D">
+      Антикоагулянт
+    </label>
+  </div>
+
+  <button id="ml-check-answer" type="button"
+    style="padding:12px 20px;margin-top:12px;cursor:pointer;">
+    Санҷидани ҷавоб
+  </button>
+
+  <p id="ml-quiz-feedback" role="status" aria-live="polite"></p>
+  <p id="ml-quiz-score">Хол: 0 аз 1</p>
+</section>
+
+<script>
+(() => {
+  const checkButton = document.getElementById('ml-check-answer');
+  const feedback = document.getElementById('ml-quiz-feedback');
+  const score = document.getElementById('ml-quiz-score');
+
+  if (!checkButton || !feedback || !score) return;
+
+  let answered = false;
+
+  checkButton.addEventListener('click', () => {
+    if (answered) return;
+
+    const selected = document.querySelector(
+      'input[name="ml-answer"]:checked'
+    );
+
+    if (!selected) {
+      feedback.textContent = 'Лутфан, як ҷавобро интихоб кун.';
+      return;
+    }
+
+    answered = true;
+
+    if (selected.value === 'B') {
+      score.textContent = 'Хол: 1 аз 1';
+      feedback.textContent =
+        'Дуруст! Парацетамол ҳароратро паст мекунад ва дардро сабук менамояд. Он антибиотик нест.';
+    } else {
+      score.textContent = 'Хол: 0 аз 1';
+      feedback.textContent =
+        'Ҷавоби дуруст: пасткунандаи ҳарорат ва рафъкунандаи дард. Парацетамол антибиотик ё антикоагулянт нест.';
+    }
+
+    checkButton.disabled = true;
+  });
+})();
+</script>
 </body>
 </html>
