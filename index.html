@@ -145,7 +145,28 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:30px 15px}
     </div>
   </div>
 
+
+<div class="ml-header-actions">
   <div class="ml-header-tag">🩺 Омӯзиши тиббӣ</div>
+
+  <button type="button"
+          id="ml-avatar-button"
+          class="ml-avatar-button"
+          onclick="document.getElementById('ml-avatar-upload').click()">
+    <img id="ml-avatar-preview"
+         alt="Акси профил"
+         src=""
+         style="display:none">
+    <span id="ml-avatar-placeholder">👤</span>
+  </button>
+
+  <input type="file"
+         id="ml-avatar-upload"
+         accept="image/*"
+         hidden>
+
+  <span class="ml-account-label">Аккаунт</span>
+</div>
 </header>
 
 <style>
