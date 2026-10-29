@@ -749,5 +749,109 @@ loadSavedProfile();
   });
 })();
 </script>
+
+<section id="ml-courses">
+  <h2>Маркази омӯзишӣ</h2>
+  <p class="ml-courses-desc">
+    Самти омӯзишро интихоб кун ва донишатро такмил деҳ.
+  </p>
+
+  <div class="ml-course-grid">
+    <article class="ml-course-card">
+      <div class="ml-course-icon">💊</div>
+      <h3>Фармакология</h3>
+      <p>Доруҳо, механизмҳои таъсир ва истифодаи клиникӣ.</p>
+      <button type="button" onclick="document.getElementById('ml-quiz-topic').value='pharmacology'; document.getElementById('ml-quiz').scrollIntoView({behavior:'smooth'});">
+        Оғози омӯзиш
+      </button>
+    </article>
+
+    <article class="ml-course-card">
+      <div class="ml-course-icon">👶</div>
+      <h3>Педиатрия</h3>
+      <p>Бемориҳои кӯдакон, ташхис ва принсипҳои табобат.</p>
+      <button type="button" onclick="document.getElementById('ml-quiz').scrollIntoView({behavior:'smooth'});">
+        Омӯзиши мавзӯъ
+      </button>
+    </article>
+
+    <article class="ml-course-card">
+      <div class="ml-course-icon">❤️</div>
+      <h3>Кардиология</h3>
+      <p>Дил, рагҳо, ЭКГ ва бемориҳои системаи дилу раг.</p>
+      <button type="button" onclick="document.getElementById('ml-quiz').scrollIntoView({behavior:'smooth'});">
+        Омӯзиши мавзӯъ
+      </button>
+    </article>
+
+    <article class="ml-course-card">
+      <div class="ml-course-icon">📝</div>
+      <h3>Тестҳои тиббӣ</h3>
+      <p>Санҷиши дониш, холҳо ва шарҳи ҷавобҳо.</p>
+      <button type="button" onclick="document.getElementById('ml-quiz').scrollIntoView({behavior:'smooth'});">
+        Сар кардани тест
+      </button>
+    </article>
+  </div>
+</section>
+
+<style>
+  #ml-courses {
+    max-width: 1100px;
+    margin: 32px auto;
+    padding: 24px;
+  }
+
+  #ml-courses h2 {
+    font-size: 28px;
+    margin-bottom: 8px;
+  }
+
+  .ml-courses-desc {
+    color: #6b7d74;
+    margin-bottom: 22px;
+  }
+
+  .ml-course-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+  }
+
+  .ml-course-card {
+    background: white;
+    border: 1px solid #e2ebe5;
+    border-radius: 18px;
+    padding: 22px;
+    box-shadow: 0 6px 24px rgba(25,53,43,0.04);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .ml-course-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 28px rgba(25,53,43,0.08);
+  }
+
+  .ml-course-icon {
+    font-size: 32px;
+    margin-bottom: 12px;
+  }
+
+  .ml-course-card p {
+    color: #6b7d74;
+    min-height: 48px;
+  }
+
+  @media (max-width: 600px) {
+    #ml-courses {
+      padding: 16px;
+      margin: 18px auto;
+    }
+
+    .ml-course-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
 </body>
 </html>
