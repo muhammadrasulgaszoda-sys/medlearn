@@ -1083,5 +1083,89 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 });
 </script>
+
+<script>
+document.addEventListener('DOMContentLoaded', async function () {
+  const upload = document.getElementById('ml-avatar-upload');
+  const preview = document.getElementById('ml-avatar-preview');
+  const placeholder = document.getElementById('ml-avatar-placeholder');
+
+  if (!upload || !preview || !placeholder) return;
+
+  const { data: { user }, error: userError } =
+    await supabaseClient.auth.getUser();
+
+  if (userError || !user) return;
+
+  const userId = user.id;
+
+  // Нишон додани акси қаблан захирашуда
+  const { data: files } = await supabaseClient.storage
+    .from('avatars')
+    .list(userId);
+
+  if (files && files.length) {
+    const latest = files
+      .filter(file => /\.(jpg|jpeg|png|webp)$/i.test(file.name))
+      .sort((a, b) => b.updated_at.localeCompare(a.updated_at))[0];
+
+    if (latest) {
+      const { data } = await supabaseClient.storage
+        .from('avatars')
+        .createSignedUrl(userId + '/' + latest.name, 3600);
+
+      if (data && data.signedUrl) {
+        preview.src = data.signedUrl;
+        preview.style.display = 'block';
+        placeholder.style.display = 'none';
+      }
+    }
+  }
+
+  // Бор кардани акси нав
+  upload.addEventListener('change', async function () {
+    const file = upload.files[0];
+    if (!file) return;
+
+    if (!file.type.startsWith('image/') || file.size > 5 * 1024 * 1024) {
+      alert('Акс бояд аз 5 МБ хурд бошад.');
+      upload.value = '';
+      return;
+    }
+
+    const extension = file.name.split('.').pop().toLowerCase();
+    if (!['jpg', 'jpeg', 'png', 'webp'].includes(extension)) {
+      alert('Формати акс бояд JPG, PNG ё WEBP бошад.');
+      upload.value = '';
+      return;
+    }
+
+    const path = userId + '/' + Date.now() + '.' + extension;
+
+    const { error } = await supabaseClient.storage
+      .from('avatars')
+      .upload(path, file);
+
+    if (error) {
+      alert('Акс захира нашуд: ' + error.message);
+      return;
+    }
+
+    const { data, error: urlError } = await supabaseClient.storage
+      .from('avatars')
+      .createSignedUrl(path, 3600);
+
+    if (urlError || !data) {
+      alert('Акс бор шуд, аммо нишон дода нашуд.');
+      return;
+    }
+
+    preview.src = data.signedUrl;
+    preview.style.display = 'block';
+    placeholder.style.display = 'none';
+    alert('Акси профил захира шуд!');
+  });
+});
+</script>
 </body>
 </html>
