@@ -1245,6 +1245,69 @@ document.addEventListener('DOMContentLoaded', function () {
     };
   }
 });
+
+  const deleteButton = document.getElementById('ml-delete-avatar');
+  const signOutButton = document.getElementById('ml-sign-out');
+
+  if (deleteButton) {
+    deleteButton.onclick = async function () {
+      const confirmed = confirm('Акси профилро нест кунем?');
+      if (!confirmed) return;
+
+      const { data: { user } } = await supabaseClient.auth.getUser();
+      if (!user) return;
+
+      const { data: files, error } = await supabaseClient.storage
+        .from('avatars')
+        .list(user.id);
+
+      if (error) {
+        alert(error.message);
+        return;
+      }
+
+      const paths = (files || [])
+        .map(file => user.id + '/' + file.name);
+
+      if (paths.length) {
+        const { error: deleteError } = await supabaseClient.storage
+          .from('avatars')
+          .remove(paths);
+
+        if (deleteError) {
+          alert(deleteError.message);
+          return;
+        }
+      }
+
+      const preview = document.getElementById('ml-avatar-preview');
+      const placeholder = document.getElementById('ml-avatar-placeholder');
+
+      preview.src = '';
+      preview.style.display = 'none';
+      placeholder.style.display = 'block';
+      menu.hidden = true;
+
+      alert('Акси профил нест карда шуд.');
+    };
+  }
+
+  if (signOutButton) {
+    signOutButton.onclick = async function () {
+      const confirmed = confirm('Аз аккаунт бароем?');
+      if (!confirmed) return;
+
+      const { error } = await supabaseClient.auth.signOut();
+
+      if (error) {
+        alert(error.message);
+        return;
+      }
+
+      location.reload();
+    };
+  }
+
 </script>
 </body>
 </html>
