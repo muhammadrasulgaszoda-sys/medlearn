@@ -1201,5 +1201,50 @@ document.addEventListener('DOMContentLoaded', async function () {
   });
 });
 </script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const avatarButton = document.getElementById('ml-avatar-button');
+  const menu = document.getElementById('ml-account-menu');
+  const changeButton = document.getElementById('ml-change-avatar');
+  const upload = document.getElementById('ml-avatar-upload');
+  const viewButton = document.getElementById('ml-view-profile');
+
+  if (!avatarButton || !menu) return;
+
+  avatarButton.onclick = function (event) {
+    event.stopPropagation();
+    menu.hidden = !menu.hidden;
+  };
+
+  menu.addEventListener('click', function (event) {
+    event.stopPropagation();
+  });
+
+  document.addEventListener('click', function () {
+    menu.hidden = true;
+  });
+
+  if (changeButton && upload) {
+    changeButton.onclick = function () {
+      menu.hidden = true;
+      upload.click();
+    };
+  }
+
+  if (viewButton) {
+    viewButton.onclick = function () {
+      menu.hidden = true;
+      const profile = document.getElementById('ml-profile');
+
+      if (profile) {
+        profile.classList.remove('ml-page-hidden');
+        profile.hidden = false;
+        profile.scrollIntoView({ behavior: 'smooth' });
+      }
+    };
+  }
+});
+</script>
 </body>
 </html>
