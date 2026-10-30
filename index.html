@@ -355,6 +355,34 @@ const supabaseClient = window.supabase.createClient(
     font-weight: bold;}
   #ml-auth button.secondary { background: #e9eef7; color: #183153; }
   #ml-auth-status { overflow-wrap: anywhere; }
+.ml-account-menu {
+  position: absolute;
+  top: 85px;
+  right: 20px;
+  z-index: 9999;
+  width: 230px;
+  padding: 10px;
+  background: white;
+  border: 1px solid #e2ebe5;
+  border-radius: 14px;
+  box-shadow: 0 8px 25px rgba(0,0,0,.12);
+}
+
+.ml-account-menu button {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  border: none;
+  background: white;
+  color: #19352b;
+  text-align: left;
+  cursor: pointer;
+  border-radius: 8px;
+}
+
+.ml-account-menu button:hover {
+  background: #e9f7ef;
+}
 </style>
 <section id="ml-auth">
   <h2>🔐 MedLearn Pro — Ҳисоби ман</h2>
