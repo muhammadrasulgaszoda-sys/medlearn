@@ -1305,149 +1305,103 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
 </script>
-
-<!-- MedLearn Pro: Pharmacology Study Timer -->
-<section id="ml-study-timer" style="max-width:700px;margin:25px auto;padding:24px;background:white;border:1px solid #e2ebe5;border-radius:20px;text-align:center;box-shadow:0 6px 24px rgba(25,53,43,.05)">
-  <div style="font-size:32px">💊</div>
-  <h2>Pharmacology Study Timer</h2>
-  <p style="color:#6b7d74">Вақти омӯзиши фармакология</p>
-
-  <div id="ml-timer-display" style="font-size:58px;font-weight:800;color:#16845b;margin:20px 0;font-variant-numeric:tabular-nums">30:00</div>
-
-  <div style="display:flex;justify-content:center;gap:10px;flex-wrap:wrap">
-    <button id="ml-timer-start">▶ Оғоз</button>
-    <button id="ml-timer-pause" style="background:#64748b">Ⅱ Таваққуф</button>
-    <button id="ml-timer-reset" style="background:#64748b">↻ Аз нав</button>
-    <button id="ml-timer-add" style="background:#16845b">+5 дақиқа</button>
-  </div>
-  <p id="ml-timer-status" style="color:#6b7d74;margin-top:16px">Омодаӣ? Оғоз кун!</p>
+<!-- MedLearn Pro Study Timer -->
+<section id="ml-study-timer" style="max-width:700px;margin:25px auto;padding:24px;background:#f5fff8;border:1px solid #d8f0df;border-radius:20px;text-align:center">
+  <h2 style="color:#167a45">📚 Study Timer</h2>
+  <div id="ml-timer-display" style="font-size:52px;font-weight:bold;color:#167a45">30:00</div>
+  <button type="button" id="ml-timer-start">▶ Оғоз</button>
+  <button type="button" id="ml-timer-pause">Ⅱ Таваққуф</button>
+  <button type="button" id="ml-timer-reset">↻ Аз нав</button>
+  <p>
+    <button type="button" id="ml-timer-minus">−5 дақ</button>
+    <button type="button" id="ml-timer-add">+5 дақ</button>
+  </p>
+  <p id="ml-timer-status">Омодаӣ? Оғоз кун!</p>
+  <h3>🏆 Холҳо: <span id="ml-timer-points">0</span></h3>
+  <p>⏱ Вақти омӯзиш: <span id="ml-timer-total">0</span> дақиқа</p>
+  <small>Ҳар 10 дақиқаи омӯзиши фаъол = +10 хол 🌟</small>
 </section>
-
-<div id="ml-study-timer" style="background:#f5fff8;padding:20px;border-radius:18px;text-align:center;border:1px solid #d8f0df;margin:20px 0;">
-  <h2 style="color:#167a45;margin-top:0;">📚 Study Timer</h2>
-
-  <div id="ml-timer-display" style="font-size:48px;font-weight:bold;color:#167a45;">30:00</div>
-  <p id="ml-timer-status">Омодаӣ ба омӯзиш?</p>
-
-  <div style="display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin:15px 0;">
-    <button id="ml-timer-start">▶️ Оғоз</button>
-    <button id="ml-timer-pause">⏸ Ист</button>
-    <button id="ml-timer-reset">↻ Аз нав</button>
-  </div>
-
-  <div style="display:flex;justify-content:center;gap:10px;flex-wrap:wrap;">
-    <button id="ml-timer-minus">−5 дақ</button>
-    <button id="ml-timer-add">+5 дақ</button>
-  </div>
-
-  <hr style="border:0;border-top:1px solid #d8f0df;margin:20px 0;">
-
-  <div style="font-size:18px;color:#167a45;">
-    🏆 Холҳои ту: <b id="ml-timer-points">0</b>
-  </div>
-  <p>⏱ Вақти омӯзиш: <b id="ml-timer-total">0</b> дақиқа</p>
-  <p style="font-size:13px;color:#56836a;">Ҳар 10 дақиқа = +10 хол 🌟</p>
-</div>
-
-<style>
-#ml-study-timer button {
-  border:0;
-  border-radius:10px;
-  padding:11px 16px;
-  background:#16834b;
-  color:white;
-  font-weight:bold;
-  cursor:pointer;
-}
-#ml-study-timer button:active { opacity:.75; }
-</style>
 
 <script>
 (function () {
   const $ = id => document.getElementById(id);
-  const keys = {
-    remaining: "ml-timer-remaining",
-    elapsed: "ml-timer-elapsed",
-    points: "ml-timer-points"
-  };
+  const display = $("ml-timer-display");
+  if (!display || display.dataset.ready) return;
+  display.dataset.ready = "1";
 
-  let remaining = Number(localStorage.getItem(keys.remaining) ?? 1800);
-  let elapsed = Number(localStorage.getItem(keys.elapsed) ?? 0);
-  let points = Number(localStorage.getItem(keys.points) ?? 0);
+  let remaining = Number(localStorage.getItem("ml-timer-remaining") ?? 1800);
+  let elapsed = Number(localStorage.getItem("ml-timer-elapsed") ?? 0);
+  let points = Number(localStorage.getItem("ml-timer-points") ?? 0);
   let running = false;
   let interval = null;
+  let awarded = Math.floor(elapsed / 600);
 
   function save() {
-    localStorage.setItem(keys.remaining, remaining);
-    localStorage.setItem(keys.elapsed, elapsed);
-    localStorage.setItem(keys.points, points);
+    localStorage.setItem("ml-timer-remaining", remaining);
+    localStorage.setItem("ml-timer-elapsed", elapsed);
+    localStorage.setItem("ml-timer-points", points);
   }
 
   function render() {
     $("ml-timer-display").textContent =
       String(Math.floor(remaining / 60)).padStart(2, "0") + ":" +
       String(remaining % 60).padStart(2, "0");
-
     $("ml-timer-points").textContent = points;
     $("ml-timer-total").textContent = Math.floor(elapsed / 60);
   }
 
-  function stop(message) {
+  function pause(message) {
     running = false;
     clearInterval(interval);
     interval = null;
     $("ml-timer-status").textContent = message;
   }
 
-  $("ml-timer-start").onclick = function () {
+  $("ml-timer-start").addEventListener("click", () => {
     if (running || remaining <= 0) return;
     running = true;
     $("ml-timer-status").textContent = "Омӯзиш идома дорад 💪";
+    interval = setInterval(() => {
+      remaining--;
+      elapsed++;
 
-    interval = setInterval(function () {
-      if (remaining > 0) {
-        remaining--;
-        elapsed++;
-
-        if (elapsed % 600 === 0) {
-          points += 10;
-          $("ml-timer-status").textContent = "Офарин! +10 хол гирифтӣ 🎉";
-        }
-
-        save();
-        render();
+      const newAwarded = Math.floor(elapsed / 600);
+      if (newAwarded > awarded) {
+        points += (newAwarded - awarded) * 10;
+        awarded = newAwarded;
+        $("ml-timer-status").textContent = "🎉 +10 хол!";
       }
 
-      if (remaining <= 0) {
-        stop("Вақти омӯзиш ба охир расид! Офарин! 🎓");
-      }
+      save();
+      render();
+
+      if (remaining <= 0) pause("Вақт ба охир расид! Офарин!");
     }, 1000);
-  };
+  });
 
-  $("ml-timer-pause").onclick = function () {
-    stop("Таймер таваққуф кард.");
-  };
+  $("ml-timer-pause").addEventListener("click", () => pause("Таймер таваққуф кард."));
 
-  $("ml-timer-reset").onclick = function () {
-    stop("Таймер аз нав оғоз шуд.");
+  $("ml-timer-reset").addEventListener("click", () => {
+    pause("Таймер аз нав оғоз шуд.");
     remaining = 1800;
     elapsed = 0;
+    awarded = 0;
     save();
     render();
-  };
+  });
 
-  $("ml-timer-add").onclick = function () {
+  $("ml-timer-add").addEventListener("click", () => {
     remaining += 300;
     save();
     render();
-  };
+  });
 
-  $("ml-timer-minus").onclick = function () {
+  $("ml-timer-minus").addEventListener("click", () => {
     remaining = Math.max(0, remaining - 300);
     save();
     render();
-    if (remaining === 0) stop("Вақти омӯзиш ба охир расид!");
-  };
+    if (remaining === 0) pause("Вақт ба охир расид!");
+  });
 
   render();
 })();
