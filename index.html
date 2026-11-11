@@ -1305,5 +1305,93 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
 </script>
+
+<!-- MedLearn Pro: Pharmacology Study Timer -->
+<section id="ml-study-timer" style="max-width:700px;margin:25px auto;padding:24px;background:white;border:1px solid #e2ebe5;border-radius:20px;text-align:center;box-shadow:0 6px 24px rgba(25,53,43,.05)">
+  <div style="font-size:32px">💊</div>
+  <h2>Pharmacology Study Timer</h2>
+  <p style="color:#6b7d74">Вақти омӯзиши фармакология</p>
+
+  <div id="ml-timer-display" style="font-size:58px;font-weight:800;color:#16845b;margin:20px 0;font-variant-numeric:tabular-nums">30:00</div>
+
+  <div style="display:flex;justify-content:center;gap:10px;flex-wrap:wrap">
+    <button id="ml-timer-start">▶ Оғоз</button>
+    <button id="ml-timer-pause" style="background:#64748b">Ⅱ Таваққуф</button>
+    <button id="ml-timer-reset" style="background:#64748b">↻ Аз нав</button>
+    <button id="ml-timer-add" style="background:#16845b">+5 дақиқа</button>
+  </div>
+  <p id="ml-timer-status" style="color:#6b7d74;margin-top:16px">Омодаӣ? Оғоз кун!</p>
+</section>
+
+<script>
+(() => {
+  const display = document.getElementById('ml-timer-display');
+  const status = document.getElementById('ml-timer-status');
+  const start = document.getElementById('ml-timer-start');
+  const pause = document.getElementById('ml-timer-pause');
+  const reset = document.getElementById('ml-timer-reset');
+  const add = document.getElementById('ml-timer-add');
+
+  if (!display || display.dataset.ready) return;
+  display.dataset.ready = 'true';
+
+  let remaining = 1800;
+  let interval = null;
+
+  try {
+    remaining = Number(localStorage.getItem('ml-timer-remaining')) || 1800;
+  } catch (e) {}
+
+  function render() {
+    const min = Math.floor(remaining / 60);
+    const sec = remaining % 60;
+    display.textContent =
+      String(min).padStart(2, '0') + ':' +
+      String(sec).padStart(2, '0');
+
+    try {
+      localStorage.setItem('ml-timer-remaining', remaining);
+    } catch (e) {}
+  }
+
+  start.addEventListener('click', () => {
+    if (interval || remaining <= 0) return;
+    status.textContent = '📚 Омӯзиш идома дорад...';
+
+    interval = setInterval(() => {
+      remaining--;
+      render();
+
+      if (remaining <= 0) {
+        clearInterval(interval);
+        interval = null;
+        status.textContent = '🎉 Офарин! Машғулият анҷом ёфт!';
+      }
+    }, 1000);
+  });
+
+  pause.addEventListener('click', () => {
+    clearInterval(interval);
+    interval = null;
+    status.textContent = '⏸️ Таймер таваққуф кард.';
+  });
+
+  reset.addEventListener('click', () => {
+    clearInterval(interval);
+    interval = null;
+    remaining = 1800;
+    render();
+    status.textContent = 'Таймер аз нав оғоз шуд.';
+  });
+
+  add.addEventListener('click', () => {
+    remaining += 300;
+    render();
+    status.textContent = '➕ 5 дақиқа илова шуд.';
+  });
+
+  render();
+})();
+</script>
 </body>
 </html>
