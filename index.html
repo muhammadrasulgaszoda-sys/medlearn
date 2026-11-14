@@ -386,7 +386,25 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:30px 15px}
     display: none;
   }
 }
+.ml-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
 
+.ml-logo svg {
+  width: 46px;
+  height: 46px;
+  display: block;
+}
+
+@media (max-width: 480px) {
+  .ml-logo svg {
+    width: 38px;
+    height: 38px;
+  }
+}
 </style>
 <main>
   <section class="hero">
