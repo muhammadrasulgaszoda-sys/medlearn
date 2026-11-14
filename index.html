@@ -134,46 +134,48 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:30px 15px}
   }
 </style>
 </head>
-<body>
-  
+
 <header id="ml-header">
-  <div class="ml-brand">
-    <div class="ml-logo">✚</div>
-    <div>
-      <div class="ml-brand-name">MedLearn Pro</div>
-      <div class="ml-brand-subtitle">Medical Learning Platform</div>
-    </div>
-  </div>
-
-
-<div class="ml-header-actions">
-  <div class="ml-header-tag">🩺 Омӯзиши тиббӣ</div>
-
-  <button type="button"
-          id="ml-avatar-button"
-          class="ml-avatar-button"
-          onclick="document.getElementById('ml-avatar-upload').click()">
-    <img id="ml-avatar-preview"
-         alt="Акси профил"
-         src=""
-         style="display:none">
-    <span id="ml-avatar-placeholder">👤</span>
+  <button type="button" id="ml-menu-button"
+          class="ml-menu-button"
+          aria-label="Кушодани меню">
+    ☰
   </button>
 
-<div id="ml-account-menu" class="ml-account-menu" hidden>
-  <button type="button" id="ml-view-profile">👤 Дидани профил</button>
-  <button type="button" id="ml-change-avatar">📸 Иваз кардани акс</button>
-  <button type="button" id="ml-delete-avatar">🗑️ Нест кардани акс</button>
-  <button type="button" id="ml-sign-out">🚪 Баромадан аз аккаунт</button>
-</div>
-<input type="file"
-         id="ml-avatar-upload"
-         accept="image/*"
-         hidden>
+  <div class="ml-brand">
+    <div class="ml-brand-name">MedLearn Pro</div>
+    <div class="ml-brand-subtitle">Medical Learning Platform</div>
+    <div class="ml-logo">✚</div>
+  </div>
 
-  <span class="ml-account-label">Аккаунт</span>
-</div>
+  <div class="ml-header-actions">
+    <button type="button"
+            id="ml-avatar-button"
+            class="ml-avatar-button">
+      <img id="ml-avatar-preview"
+           alt="Акси профил"
+           src=""
+           style="display:none">
+      <span id="ml-avatar-placeholder">👤</span>
+    </button>
+
+    <span class="ml-account-label">Аккаунт</span>
+
+    <div id="ml-account-menu"
+         class="ml-account-menu" hidden>
+      <button type="button" id="ml-view-profile">👤 Дидани профил</button>
+      <button type="button" id="ml-change-avatar">📸 Иваз кардани акс</button>
+      <button type="button" id="ml-delete-avatar">🗑️ Нест кардани акс</button>
+      <button type="button" id="ml-sign-out">🚪 Баромадан аз аккаунт</button>
+    </div>
+
+    <input type="file"
+           id="ml-avatar-upload"
+           accept="image/*"
+           hidden>
+  </div>
 </header>
+
 
 <style>
   #ml-header {
