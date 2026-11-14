@@ -297,6 +297,79 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:30px 15px}
   cursor: pointer;
 }
 
+/* Mobile Header - MedLearn Pro */
+#ml-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
+  min-height: 70px;
+  padding: 10px 14px;
+  box-sizing: border-box;
+  background: #ffffff;
+  position: relative;
+}
+
+.ml-menu-button {
+  flex-shrink: 0;
+  width: 46px;
+  height: 46px;
+  border-radius: 12px;
+  font-size: 25px;
+}
+
+.ml-header-actions {
+  order: 2;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.ml-brand {
+  order: 3;
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-align: right;
+}
+
+.ml-brand-name {
+  font-size: 17px;
+  font-weight: 800;
+  color: #087b55;
+}
+
+.ml-brand-subtitle {
+  font-size: 10px;
+}
+
+.ml-logo {
+  font-size: 32px;
+  color: #087b55;
+}
+
+@media (max-width: 480px) {
+  #ml-header {
+    min-height: 64px;
+    padding: 8px;
+  }
+
+  .ml-account-label,
+  .ml-header-tag {
+    display: none;
+  }
+
+  .ml-brand-name {
+    font-size: 15px;
+  }
+
+  .ml-brand-subtitle {
+    display: none;
+  }
+}
+
 </style>
 <main>
   <section class="hero">
