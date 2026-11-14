@@ -1470,5 +1470,26 @@ document.addEventListener('DOMContentLoaded', function () {
   render();
 })();
 </script>
+
+document.addEventListener('DOMContentLoaded', function () {
+  const menuButton = document.getElementById('ml-menu-button');
+  const sideMenu = document.getElementById('ml-side-menu');
+
+  if (!menuButton || !sideMenu) return;
+
+  menuButton.addEventListener('click', function (event) {
+    event.stopPropagation();
+    sideMenu.hidden = !sideMenu.hidden;
+  });
+
+  sideMenu.addEventListener('click', function (event) {
+    event.stopPropagation();
+  });
+
+  document.addEventListener('click', function () {
+    sideMenu.hidden = true;
+  });
+});
+
 </body>
 </html>
